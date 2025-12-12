@@ -28,6 +28,10 @@ jobs:
           zip -r ../dotnet-app.zip .
       - name: Upload ZIP Artifact
         uses: actions/upload-artifact@v5.0.0
+        with:
+          name: dotnet-app-build
+          path: dotnet-app.zip
+          retention-days: 15
 
 
       
