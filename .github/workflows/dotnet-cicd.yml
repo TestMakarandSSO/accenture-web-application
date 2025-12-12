@@ -1,0 +1,33 @@
+name: .Net CICD Workflow
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout Sorce Code
+        uses: actions/checkout@v6.0.1
+      - name: Setup .Net Core
+        uses: actions/setup-dotnet@v5.0.1
+        with:
+          dotnet-version: 8.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build
+      - name: Test
+        run: dotnet test
+      - name: Publish project
+        run: dotnet publish -c Release -o ./publish
+      - name: Create ZIP package
+        run: |
+          cd publish
+          zip -r ../dotnet-app.zip .
+      - name: Upload ZIP Artifact
+        uses: actions/upload-artifact@v5.0.0
+
+
+      
