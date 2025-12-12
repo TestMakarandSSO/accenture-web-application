@@ -32,6 +32,21 @@ jobs:
           name: dotnet-app-build
           path: dotnet-app.zip
           retention-days: 15
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v6.0.0
+        with:
+          name: dotnet-app-build
+          path: ./artifact
+      - name: Deploy To Azure
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: accentureweb
+          publish-profile: ${{ secretes.MY_PUBLISH_PROFILE }}
+          package: "./artifact/dotnet-app.zip"
 
 
       
