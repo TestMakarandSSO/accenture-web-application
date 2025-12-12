@@ -13,6 +13,7 @@ jobs:
         run: echo "Building the project!!!"
   deploy:
     runs-on: windows-latest
+    needs: build
     steps:
       - name: Deploy job
         run: echo "Deploy the project!!!"
